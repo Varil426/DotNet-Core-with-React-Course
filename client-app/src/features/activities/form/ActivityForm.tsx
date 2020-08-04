@@ -8,6 +8,7 @@ interface IProps {
 	activity: IActivity;
 	createActivity: (activity: IActivity) => void;
 	editActivity: (activity: IActivity) => void;
+	submitting: boolean;
 }
 
 export const ActivityForm: React.FC<IProps> = ({
@@ -15,6 +16,7 @@ export const ActivityForm: React.FC<IProps> = ({
 	activity: initialFormState,
 	createActivity,
 	editActivity,
+	submitting,
 }) => {
 	const initializeForm = () => {
 		if (initialFormState) {
@@ -99,6 +101,7 @@ export const ActivityForm: React.FC<IProps> = ({
 					positive
 					type="submit"
 					content="Submit"
+					loading={submitting}
 				/>
 				<Button
 					floated="right"
