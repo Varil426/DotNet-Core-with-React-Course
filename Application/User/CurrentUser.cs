@@ -26,7 +26,7 @@ namespace Application.User
 
 			public async Task<User> Handle(Query request, CancellationToken cancellationToken)
 			{
-				var user = await this.userManager.FindByNameAsync(this.userAccessor.GetCurrentUser());
+				var user = await this.userManager.FindByNameAsync(this.userAccessor.GetCurrentUsername());
 				return new User
 				{
 					DisplayName = user.DisplayName,
