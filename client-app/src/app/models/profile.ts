@@ -11,3 +11,8 @@ export interface IPhoto {
 	url: string;
 	isMain: boolean;
 }
+
+export interface IEditFormValues {
+	displayName: string;
+	bio: string;
+}

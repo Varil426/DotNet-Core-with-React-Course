@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Tab, Header, Card, Image, Button, Grid } from "semantic-ui-react";
 import { RootStoreContext } from "../../app/stores/rootStore";
 import PhotoUploadWidget from "../../app/common/photoUpload/PhotoUploadWidget";
@@ -21,9 +21,12 @@ const ProfilePhotos = () => {
 		undefined
 	);
 
-	const handleUploadImage = (photo: Blob) => {
-		uploadPhoto(photo).then(() => setAddPhotoMode(false));
-	};
+	const handleUploadImage = useCallback(
+		(photo: Blob) => {
+			uploadPhoto(photo).then(() => setAddPhotoMode(false));
+		},
+		[uploadPhoto]
+	);
 
 	return (
 		<Tab.Pane>

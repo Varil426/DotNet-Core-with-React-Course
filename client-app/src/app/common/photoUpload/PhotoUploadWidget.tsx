@@ -21,8 +21,9 @@ const PhotoUploadWidget: React.FC<IProps> = ({ loading, uploadPhoto }) => {
 	}, [files]);
 
 	useEffect(() => {
+		console.log("TEST");
 		if (image) uploadPhoto(image);
-	}, [image, uploadPhoto]);
+	}, [image]);
 
 	return (
 		<Fragment>

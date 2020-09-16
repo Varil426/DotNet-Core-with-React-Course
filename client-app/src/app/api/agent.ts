@@ -91,6 +91,11 @@ const Profiles = {
 		requests.postForm(`/photos`, photo),
 	setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
 	deletePhoto: (id: string) => requests.del(`/photos/${id}`),
+	edit: (displayName: string, bio: string) =>
+		requests.put(`/profiles`, {
+			displayName: displayName,
+			bio: bio,
+		}),
 };
 
 export default {
