@@ -75,7 +75,7 @@ export default class ActivityStore {
 			});
 		});
 		this.hubConnection.on("Send", (message) => {
-			toast.info(message);
+			//toast.info(message);
 		});
 	};
 

@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import React, { useContext } from "react";
 import { Field, Form as FinalForm } from "react-final-form";
 import { combineValidators, isRequired } from "revalidate";
@@ -18,7 +19,7 @@ interface IProps {
 
 const ProfileEditForm: React.FC<IProps> = ({ editProfile }) => {
 	const rootStore = useContext(RootStoreContext);
-	const { profile } = rootStore.profileStore;
+	const { profile, updatingProfile } = rootStore.profileStore;
 	return (
 		<FinalForm
 			onSubmit={editProfile}
@@ -26,7 +27,6 @@ const ProfileEditForm: React.FC<IProps> = ({ editProfile }) => {
 			initialValues={profile}
 			render={({
 				handleSubmit,
-				submitting,
 				submitError,
 				invalid,
 				pristine,
@@ -54,7 +54,7 @@ const ProfileEditForm: React.FC<IProps> = ({ editProfile }) => {
 						disabled={
 							(invalid && !dirtySinceLastSubmit) || pristine
 						}
-						loading={submitting}
+						loading={updatingProfile}
 						color="teal"
 						content="Submit"
 						fluid
@@ -65,4 +65,4 @@ const ProfileEditForm: React.FC<IProps> = ({ editProfile }) => {
 	);
 };
 
-export default ProfileEditForm;
+export default observer(ProfileEditForm);
