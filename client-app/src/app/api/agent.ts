@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { IActivity } from "../models/activity";
+import { IActivitiesEnvelope, IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
@@ -66,7 +66,11 @@ const requests = {
 };
 
 const Activities = {
-	list: (): Promise<IActivity[]> => requests.get("/activities"),
+	list: (params: URLSearchParams): Promise<IActivitiesEnvelope> =>
+		axios
+			.get("/activities", { params: params })
+			.then(sleep(1000))
+			.then(responseBody),
 	details: (id: string) => requests.get(`/activities/${id}`),
 	create: (activity: IActivity) => requests.post("/activities", activity),
 	update: (activity: IActivity) =>
@@ -102,6 +106,8 @@ const Profiles = {
 		requests.del(`/profiles/${username}/follow`),
 	listFollowings: (username: string, predicate: string) =>
 		requests.get(`/profiles/${username}/follow?predicate=${predicate}`),
+	listActivities: (username: string, predicate: string) =>
+		requests.get(`/profiles/${username}/activities?predicate=${predicate}`),
 };
 
 export default {
