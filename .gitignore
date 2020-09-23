@@ -3,3 +3,5 @@ obj
 .vscode
 appsettings.json
 *.db
+wwwroot
+publish
