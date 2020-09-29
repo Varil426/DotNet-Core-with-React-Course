@@ -47,13 +47,10 @@ namespace Application.User
 				var result = await this.signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 				if (result.Succeeded)
 				{
-					return new User
-					{
-						DisplayName = user.DisplayName,
-						Token = this.jwtGenerator.CreateToken(user),
-						Username = user.UserName,
-						Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
-					};
+					var refreshToken = this.jwtGenerator.GenerateRefreshToken();
+					user.RefreshTokens.Add(refreshToken);
+					await this.userManager.UpdateAsync(user);
+					return new User(user, this.jwtGenerator, refreshToken.Token);
 				}
 				throw new RestException(HttpStatusCode.Unauthorized);
 			}

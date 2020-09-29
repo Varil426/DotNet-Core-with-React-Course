@@ -88,7 +88,11 @@ const ActivityForm: React.FC<RouteComponentProps<DetailParams>> = ({
 						initialValues={activity}
 						onSubmit={handleFinalFormSubmit}
 						render={({ handleSubmit, invalid, pristine }) => (
-							<Form onSubmit={handleSubmit} loading={loading}>
+							<Form
+								onSubmit={handleSubmit}
+								loading={loading}
+								autoComplete="off"
+							>
 								<Field
 									name="title"
 									placeholder="Title"

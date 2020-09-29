@@ -28,13 +28,10 @@ namespace Application.User
 			public async Task<User> Handle(Query request, CancellationToken cancellationToken)
 			{
 				var user = await this.userManager.FindByNameAsync(this.userAccessor.GetCurrentUsername());
-				return new User
-				{
-					DisplayName = user.DisplayName,
-					Username = user.UserName,
-					Token = this.jwtGenerator.CreateToken(user),
-					Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
-				};
+				var refreshToken = this.jwtGenerator.GenerateRefreshToken();
+				user.RefreshTokens.Add(refreshToken);
+				await this.userManager.UpdateAsync(user);
+				return new User(user, this.jwtGenerator, refreshToken.Token);
 			}
 		}
 	}

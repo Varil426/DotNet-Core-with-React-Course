@@ -62,16 +62,12 @@ namespace Application.User
 					Email = request.Email,
 					UserName = request.Username
 				};
+				var refreshToken = this.jwtGenerator.GenerateRefreshToken();
+				user.RefreshTokens.Add(refreshToken);
 				var result = await this.userManager.CreateAsync(user, request.Password);
 				if (result.Succeeded)
 				{
-					return new User
-					{
-						DisplayName = user.DisplayName,
-						Token = this.jwtGenerator.CreateToken(user),
-						Username = user.UserName,
-						Image = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
-					};
+					return new User(user, this.jwtGenerator, refreshToken.Token);
 				}
 				throw new Exception("Problem saving changes");
 			}
